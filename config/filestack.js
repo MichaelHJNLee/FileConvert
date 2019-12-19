@@ -1,4 +1,4 @@
-var apiKey = 'AlCgdUFnAS3Sw2WrHoXC8z';
+var apiKey = 'AyGKqfXxOSpWPqbkhtsrYz';
 
 module.exports = {
   apiKey
