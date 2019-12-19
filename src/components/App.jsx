@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import FormData from 'form-data'
+import FormData from 'form-data';
 
 class App extends React.Component {
     constructor(props) {
@@ -28,7 +28,14 @@ class App extends React.Component {
       }
       axios.post(`/api/image/${document.getElementById('filetype').value}`, data, config)
         .then((response) => {
-          console.log(response)
+          let newImages = this.state.images;
+          newImages.push(response.data);
+          this.setState({
+            images: newImages
+          })
+        })
+        .catch((err) => {
+          console.log(err);
         })
     }
 
@@ -45,6 +52,7 @@ class App extends React.Component {
                 <option value="svg">SVG</option>
               </select>
               <button onClick={this.handleUpload}>Submit</button>
+              <div>{this.state.images.map((image, index) => <img key={index} src={image}></img>)}</div>
             </div>
         )
     }
