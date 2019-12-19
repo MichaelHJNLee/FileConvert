@@ -1,20 +1,50 @@
 import React from 'react';
+import axios from 'axios';
+import FormData from 'form-data'
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+          images: []
         }
+        this.handleUpload = this.handleUpload.bind(this);
     }
+
+    handleUpload() {
+      let selected = document.getElementById('filepick').files[0];
+      if (!selected) {
+        alert("Please select a file");
+        return;
+      }
+      if (selected.type !== "application/pdf") {
+        alert("Only PDF's are allowed!");
+        return;
+      }
+      let data = new FormData();
+      data.append("image", selected);
+      let config = {
+        headers: { 'Content-Type': `multipart/form-data; boundary=${data._boundary}` },
+      }
+      axios.post(`/api/image/${document.getElementById('filetype').value}`, data, config)
+        .then((response) => {
+          console.log(response)
+        })
+    }
+
 
     render() {
         return (
             <div>
-              <form id="uploadImage" encType="multipart/form-data" action="/api/photo" method="post">
-                <input type="file" name="image" />
-                <input type="submit" />
-              </form>
+              <input id="filepick" type="file" name="image" />
+              <select id="filetype">
+                <option value="jpg">JPG</option>
+                <option value="png">PNG</option>
+                <option value="pjpg">PJPG</option>
+                <option value="webp">WEBP</option>
+                <option value="svg">SVG</option>
+              </select>
+              <button onClick={this.handleUpload}>Submit</button>
             </div>
         )
     }
