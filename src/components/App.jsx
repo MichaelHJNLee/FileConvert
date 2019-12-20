@@ -132,7 +132,6 @@ class App extends React.Component {
                 sitekey={config.cap}
                 onChange={this.handleCaptcha}
               /></center>
-              <button onClick={this.handleCaptcha}>test</button>
               {this.state.loading && <center><img src="./loading.gif"></img></center>}
               <br/>
               <ImageContainer>{this.state.images.map((image, index) => <div key={index} style={{"display": "flex", "flexDirection": "column"}}><img style={{"height": "400px", "width" : "300px", "border": "1px solid black"}} src={image[0]}></img><center>{`'${image[1]}' Converted to ${image[2].toUpperCase()}`}</center></div>)}</ImageContainer>
