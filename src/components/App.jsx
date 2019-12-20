@@ -97,6 +97,9 @@ class App extends React.Component {
         this.setState({
           captcha: true
         })
+        setTimeout(() => {
+          this.setState({captcha: false})
+        }, 110000);
       })
       .catch((err) => {
         console.log(err);
