@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(fileUpload());
 app.use(express.static('dist'));
 
-app.post('/cap', (req, res) => {
+app.post('/api/verify', (req, res) => {
   if (req.body.value) {
     request(`https://www.google.com/recaptcha/api/siteverify?secret="${key.capsec}"&response="${req.body.value}"`, (err, response, body) => {
       if(body.success !== undefined && !body.success) {
