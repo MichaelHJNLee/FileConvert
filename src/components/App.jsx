@@ -99,10 +99,13 @@ class App extends React.Component {
         })
         setTimeout(() => {
           this.setState({captcha: false})
-        }, 110000);
+        }, 100000);
       })
       .catch((err) => {
         console.log(err);
+        this.setState({
+          captcha: false
+        })
       })
     }
 
