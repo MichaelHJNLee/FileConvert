@@ -3,6 +3,7 @@ const filestack = require('filestack-js');
 const key = require('../config/filestack.js');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
+const request = require('request');
 const app = express(); 
 const port = 3000;
 const options = { "security": {} };
@@ -16,7 +17,16 @@ app.use(fileUpload());
 app.use(express.static('dist'));
 
 app.post('/cap', (req, res) => {
-  console.log(req.body.value)
+  if (req.body.value) {
+    request(`https://www.google.com/recaptcha/api/siteverify?secret="${key.capsec}"&response="${req.body.value}"`, (err, response, body) => {
+      if(body.success !== undefined && !body.success) {
+        return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
+      }
+      res.json({"responseCode" : 0,"responseDesc" : "Success"});
+    })
+  } else {
+    return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
+  }
 })
 
 app.post('/api/image/:type', (req, res) => {
