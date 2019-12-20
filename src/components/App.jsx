@@ -104,7 +104,7 @@ class App extends React.Component {
     }
 
     convert = () => {
-      return !this.state.captcha ? <button disabled={true} onClick={() => {this.setState({loading: true}, this.handleUpload)}}>Convert</button> : <button disabled={true}>Convert</button>
+      return !this.state.captcha ? <button disabled={true}>Convert</button> : <button onClick={() => {this.setState({loading: true}, this.handleUpload)}}>Convert</button>
     }
 
     render() {
