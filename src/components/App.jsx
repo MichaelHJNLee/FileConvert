@@ -90,7 +90,7 @@ class App extends React.Component {
     }
 
     handleCaptcha = (value) => {
-      axios.post('/cap', {
+      axios.post('/api/verify', {
         value: value
       })
       .then((response) => {
