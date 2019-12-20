@@ -2,6 +2,7 @@ const express = require('express');
 const filestack = require('filestack-js');
 const key = require('../config/filestack.js');
 const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser');
 const app = express(); 
 const port = 3000;
 const options = { "security": {} };
@@ -9,9 +10,14 @@ options["security"]["policy"] = key.pol;
 options["security"]["signature"] = key.sec;
 const client = filestack.init(key.apiKey, options);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : false}));
 app.use(fileUpload());
 app.use(express.static('dist'));
 
+app.post('/cap', (req, res) => {
+  console.log(req.body.value)
+})
 
 app.post('/api/image/:type', (req, res) => {
   client.upload(req.files.image.data)

@@ -47,13 +47,12 @@ class App extends React.Component {
         super(props);
         this.state = {
           loading: false,
-          images: []
+          images: [],
+          captcha: false,
         }
-        this.handleUpload = this.handleUpload.bind(this);
-        this.handleCaptcha = this.handleCaptcha.bind(this);
     }
 
-    handleUpload() {
+    handleUpload = () => {
       let selected = document.getElementById('filepick').files[0];
       if (!selected) {
         alert("Please select a file");
@@ -90,10 +89,23 @@ class App extends React.Component {
         })
     }
 
-    handleCaptcha(value) {
-      console.log(value)
+    handleCaptcha = (value) => {
+      axios.post('/cap', {
+        value: value
+      })
+      .then((response) => {
+        this.setState({
+          captcha: true
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
 
+    convert = () => {
+      return !this.state.captcha ? <button disabled={true} onClick={() => {this.setState({loading: true}, this.handleUpload)}}>Convert</button> : <button disabled={true}>Convert</button>
+    }
 
     render() {
         return (
@@ -113,13 +125,14 @@ class App extends React.Component {
                   <option value="webp">WEBP</option>
                   <option value="svg">SVG</option>
                 </select>
-                <button onClick={() => {this.setState({loading: true}, this.handleUpload)}}>Convert</button>
+                {this.convert()}
               </OptionContainer>
               <br/>
               <center><ReCAPTCHA
                 sitekey={config.cap}
                 onChange={this.handleCaptcha}
               /></center>
+              <button onClick={this.handleCaptcha}>test</button>
               {this.state.loading && <center><img src="./loading.gif"></img></center>}
               <br/>
               <ImageContainer>{this.state.images.map((image, index) => <div key={index} style={{"display": "flex", "flexDirection": "column"}}><img style={{"height": "400px", "width" : "300px", "border": "1px solid black"}} src={image[0]}></img><center>{`'${image[1]}' Converted to ${image[2].toUpperCase()}`}</center></div>)}</ImageContainer>
