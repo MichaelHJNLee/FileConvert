@@ -5,5 +5,5 @@ var pol = 'eyJleHBpcnkiOjE1NzkyNDgwMDB9';
 module.exports = {
   apiKey,
   sec,
-  pol
+  pol,
 }

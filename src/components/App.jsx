@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import FormData from 'form-data';
 import styled from 'styled-components';
+import ReCAPTCHA from "react-google-recaptcha";
+import config from '../config.js';
 
 const Header = styled.div`
   display: flex;
@@ -48,16 +50,23 @@ class App extends React.Component {
           images: []
         }
         this.handleUpload = this.handleUpload.bind(this);
+        this.handleCaptcha = this.handleCaptcha.bind(this);
     }
 
     handleUpload() {
       let selected = document.getElementById('filepick').files[0];
       if (!selected) {
         alert("Please select a file");
+        this.setState({
+          loading: false,
+        })
         return;
       }
       if (selected.type !== "application/pdf") {
         alert("Only PDF's are allowed!");
+        this.setState({
+          loading: false,
+        })
         return;
       }
       let data = new FormData();
@@ -81,6 +90,10 @@ class App extends React.Component {
         })
     }
 
+    handleCaptcha(value) {
+      console.log(value)
+    }
+
 
     render() {
         return (
@@ -102,6 +115,11 @@ class App extends React.Component {
                 </select>
                 <button onClick={() => {this.setState({loading: true}, this.handleUpload)}}>Convert</button>
               </OptionContainer>
+              <br/>
+              <center><ReCAPTCHA
+                sitekey={config.cap}
+                onChange={this.handleCaptcha}
+              /></center>
               {this.state.loading && <center><img src="./loading.gif"></img></center>}
               <br/>
               <ImageContainer>{this.state.images.map((image, index) => <div key={index} style={{"display": "flex", "flexDirection": "column"}}><img style={{"height": "400px", "width" : "300px", "border": "1px solid black"}} src={image[0]}></img><center>{`'${image[1]}' Converted to ${image[2].toUpperCase()}`}</center></div>)}</ImageContainer>
