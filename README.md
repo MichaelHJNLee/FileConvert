@@ -6,7 +6,6 @@ PDF Converter is a webpage where you can convert your PDF's into various image f
 
 ```bash
 npm install
-npm run build
 npm start
 ```
 
