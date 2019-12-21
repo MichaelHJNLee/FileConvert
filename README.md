@@ -16,7 +16,7 @@ This application utilizes two REST API endpoints:
 
   - POST '/api/verify'
     - The client sends a post request to this endpoint when the user interacts with the reCaptcha v2 module.
-    - The endpoint sends a post request to the Google ReCaptcha API, verifying the user's interaction
+    - The endpoint sends a post request to the Google reCaptcha API, verifying the user's interaction
     - The endpoint responds to the client with "Success" or "Failed captcha verification" based on the verification
     - The client will disable or enable the UI to convert PDF's based on this response
 
@@ -30,8 +30,8 @@ This application utilizes two REST API endpoints:
 Steps to Use:
   - Select the PDF you would like to convert
   - Select desired output format
-  - Complete ReCaptcha v2 verification
-  - Press 'Convert' button
+  - Complete reCaptcha v2 verification
+  - Click 'Convert' button
   - Converted file will be displayed
 
 Notes:
