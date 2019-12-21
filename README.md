@@ -15,6 +15,7 @@ The reCaptcha v2 in this application is only functional at the url where this ap
   - Change this.state.captcha in the constructor of class App to true
   - Save and run the command 'npm run build'
   - Run the command 'npm start'
+This process will enable the 'Convert' button to allow use without reCaptcha v2 verification.
 
 ## Design
 
