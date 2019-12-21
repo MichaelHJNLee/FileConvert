@@ -28,7 +28,7 @@ app.post('/api/verify', (req, res) => {
           });
         }
         res.json({ responseCode: 0, responseDesc: 'Success' });
-      }
+      },
     );
   } else {
     return res.json({
