@@ -1,6 +1,6 @@
 # PDF Converter
 
-PDF Converter is a webpage where you can convert your PDF's into various image files (JPG, SVG, WEBP, PJPG, PNG).
+PDF Converter is a webpage where you can convert your PDF's into various image formats (JPG, SVG, WEBP, PJPG, PNG).
 
 ## Installation
 
@@ -25,4 +25,18 @@ This application utilizes two REST API endpoints:
     - The endpoint sends a post request to the FileStack API, uploading the PDF
     - The endpoint then sends another request to the FileStack API, converting the uploaded PDF to the requested file type
     - The endpoint responds to the client with the url to the converted image
-    - All requests made to the FileStack API must include a security policy and signature
+    - All requests made to the FileStack API from this endpoint must include a correct security policy and signature
+
+The front end of this application consists of:
+  - an input field to upload a PDF
+  - a select field to choose the desired output format
+  - a submit ('convert') button
+  - a ReCaptcha v2 module for verification
+
+Notes:
+  - If a user has not picked a file, the website will alert the user to pick a file
+  - If a user has not selected a PDF file, the website will alert the user that only PDF files are allowed
+  - If the captcha verification has not succeeded, the convert button will remain disabled
+  - If the captcha verification expires, the convert button will revert to being disabled
+  - The JavaScript SDK 'filestack-js' was used to communicate with the FileStack API, and it was not used to implement any FileStack pickers or transform UI.
+  - This application is currently deployed onto an AWS EC2 instance and can be accessed on http://ec2-54-241-141-253.us-west-1.compute.amazonaws.com:3000/

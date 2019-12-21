@@ -53,7 +53,7 @@ class App extends React.Component {
     }
 
     handleUpload = () => {
-      let selected = document.getElementById('filepick').files[0];
+      const selected = document.getElementById('filepick').files[0];
       if (!selected) {
         alert("Please select a file");
         this.setState({
@@ -61,6 +61,7 @@ class App extends React.Component {
         })
         return;
       }
+
       if (selected.type !== "application/pdf") {
         alert("Only PDF's are allowed!");
         this.setState({
@@ -68,32 +69,35 @@ class App extends React.Component {
         })
         return;
       }
-      let data = new FormData();
+
+      const data = new FormData();
       data.append("image", selected);
-      let config = {
+
+      const config = {
         headers: { 'Content-Type': `multipart/form-data; boundary=${data._boundary}` },
       }
-      let filetype = document.getElementById('filetype').value;
+
+      const filetype = document.getElementById('filetype').value;
       axios.post(`/api/image/${filetype}`, data, config)
-        .then((response) => {
-          let newImages = this.state.images;
-          let newImage = [response.data, selected.name.split('.')[0], filetype];
+        .then(response => {
+          const newImages = this.state.images;
+          const newImage = [response.data, selected.name.split('.')[0], filetype];
           newImages.push(newImage);
           this.setState({
             loading: false,
             images: newImages
           })
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         })
     }
 
-    handleCaptcha = (value) => {
+    handleCaptcha = value => {
       axios.post('/api/verify', {
         value: value
       })
-      .then((response) => {
+      .then(() => {
         this.setState({
           captcha: true
         })
@@ -101,7 +105,7 @@ class App extends React.Component {
           this.setState({captcha: false})
         }, 100000);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         this.setState({
           captcha: false
@@ -109,7 +113,7 @@ class App extends React.Component {
       })
     }
 
-    convert = () => {
+    convertButton = () => {
       return !this.state.captcha ? <button disabled={true}>Convert</button> : <button onClick={() => {this.setState({loading: true}, this.handleUpload)}}>Convert</button>
     }
 
@@ -131,13 +135,15 @@ class App extends React.Component {
                   <option value="webp">WEBP</option>
                   <option value="svg">SVG</option>
                 </select>
-                {this.convert()}
+                {this.convertButton()}
               </OptionContainer>
               <br/>
-              <center><ReCAPTCHA
-                sitekey={config.cap}
-                onChange={this.handleCaptcha}
-              /></center>
+              <center>
+                  <ReCAPTCHA
+                    sitekey={config.cap}
+                    onChange={this.handleCaptcha}
+                  />
+              </center>
               {this.state.loading && <center><img src="./loading.gif"></img></center>}
               <br/>
               <ImageContainer>{this.state.images.map((image, index) => <div key={index} style={{"display": "flex", "flexDirection": "column"}}><img style={{"height": "400px", "width" : "300px", "border": "1px solid black"}} src={image[0]}></img><center>{`'${image[1]}' Converted to ${image[2].toUpperCase()}`}</center></div>)}</ImageContainer>
