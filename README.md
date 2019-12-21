@@ -1,6 +1,7 @@
 # PDF Converter
 
 PDF Converter is a webpage where you can convert your PDF's into various image formats (JPG, SVG, WEBP, PJPG, PNG).
+This application is currently deployed onto an AWS EC2 instance and can be accessed on http://ec2-54-241-141-253.us-west-1.compute.amazonaws.com:3000/.
 
 ## Installation
 
@@ -8,6 +9,12 @@ PDF Converter is a webpage where you can convert your PDF's into various image f
 npm install
 npm start
 ```
+*IMPORTANT* 
+The reCaptcha v2 in this application is only functional at the url where this application is currently deployed. If you would like to use this application locally without the reCaptcha v2, follow the steps below:
+  - Navigate to src/components/App.jsx
+  - Change this.state.captcha in the constructor of class App to true
+  - Save and run the command 'npm run build'
+  - Run the command 'npm start'
 
 ## Design
 
@@ -39,4 +46,3 @@ Notes:
   - If the captcha verification has not succeeded, the convert button will remain disabled
   - If the captcha verification expires, the convert button will revert to being disabled
   - The JavaScript SDK 'filestack-js' was used to communicate with the FileStack API, and it was not used to implement any FileStack pickers or transform UI.
-  - This application is currently deployed onto an AWS EC2 instance and can be accessed on http://ec2-54-241-141-253.us-west-1.compute.amazonaws.com:3000/
