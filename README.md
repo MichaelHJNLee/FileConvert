@@ -27,11 +27,12 @@ This application utilizes two REST API endpoints:
     - The endpoint responds to the client with the url to the converted image
     - All requests made to the FileStack API from this endpoint must include a correct security policy and signature
 
-The front end of this application consists of:
-  - an input field to upload a PDF
-  - a select field to choose the desired output format
-  - a submit ('convert') button
-  - a ReCaptcha v2 module for verification
+Steps to Use:
+  - Select the PDF you would like to convert
+  - Select desired output format
+  - Complete ReCaptcha v2 verification
+  - Press 'Convert' button
+  - Converted file will be displayed
 
 Notes:
   - If a user has not picked a file, the website will alert the user to pick a file
