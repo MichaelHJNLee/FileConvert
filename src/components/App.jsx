@@ -101,13 +101,16 @@ class App extends React.Component {
       .post('/api/verify', {
         value: value,
       })
-      .then(() => {
-        this.setState({
-          captcha: true,
-        });
-        setTimeout(() => {
-          this.setState({ captcha: false });
-        }, 100000);
+      .then(response => {
+        if (response.data.responseCode === 0) {
+          this.setState({
+            captcha: true,
+          });
+        } else {
+          this.setState({
+            captcha: false,
+          });
+        }
       })
       .catch(err => {
         console.log(err);
